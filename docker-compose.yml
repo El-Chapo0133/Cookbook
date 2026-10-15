@@ -1,0 +1,27 @@
+# Portainer: add a stack from this Git/folder so Docker can build the image.
+# On a Raspberry Pi 3, keep a single replica. Data survives container recreation.
+
+services:
+  cookbook:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: cookbook:latest
+    restart: unless-stopped
+    ports:
+      - "${COOKBOOK_PORT:-8080}:80"
+    environment:
+      TZ: Europe/Zurich
+    volumes:
+      - cookbook_data:/var/www/data
+      - cookbook_uploads:/var/www/html/uploads
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(file_get_contents('http://127.0.0.1/') === false ? 1 : 0);"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  cookbook_data:
+  cookbook_uploads:
