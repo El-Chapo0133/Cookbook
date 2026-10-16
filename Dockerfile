@@ -21,6 +21,7 @@ RUN chmod +x /usr/local/bin/cookbook-entrypoint.sh \
     && chown -R www-data:www-data /var/www/data /var/www/html/uploads /var/www/src /var/www/templates /var/www/config
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html
+ENV COOKBOOK_UPLOAD_DIR=/var/www/html/uploads/recipes
 
 EXPOSE 80
 

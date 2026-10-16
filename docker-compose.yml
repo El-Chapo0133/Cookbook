@@ -12,6 +12,7 @@ services:
       - "${COOKBOOK_PORT:-8080}:80"
     environment:
       TZ: Europe/Zurich
+      COOKBOOK_UPLOAD_DIR: /var/www/html/uploads/recipes
     volumes:
       - cookbook_data:/var/www/data
       - cookbook_uploads:/var/www/html/uploads
