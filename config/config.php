@@ -15,6 +15,6 @@ return [
     'uploads' => [
         'dir' => dirname(__DIR__) . '/public/uploads/recipes',
         'url' => 'uploads/recipes',
-        'max_bytes' => 2 * 1024 * 1024,
+        'max_bytes' => 8 * 1024 * 1024,
     ],
 ];

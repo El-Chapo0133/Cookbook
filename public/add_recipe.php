@@ -10,20 +10,24 @@ $recipe = null;
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $uploader = image_uploader();
 
-    try {
-        $recipe = Recipe::fromPost($_POST);
-        $recipe->imagePath = $uploader->saveRecipeImage($_FILES['RecipeImage'] ?? ['error' => UPLOAD_ERR_NO_FILE]);
-        $recipe = recipes()->create($recipe);
-        redirect('recipe.php?id=' . $recipe->id);
-    } catch (InvalidArgumentException $e) {
-        $error = $e->getMessage();
-        if ($recipe?->imagePath) {
-            $uploader->delete($recipe->imagePath);
-        }
-    } catch (Throwable) {
-        $error = 'Impossible d’enregistrer la recette.';
-        if ($recipe?->imagePath) {
-            $uploader->delete($recipe->imagePath);
+    if (post_too_large()) {
+        $error = 'L’envoi est trop volumineux (8 Mo maximum pour l’image).';
+    } else {
+        try {
+            $recipe = Recipe::fromPost($_POST);
+            $recipe->imagePath = $uploader->saveRecipeImage($_FILES['RecipeImage'] ?? ['error' => UPLOAD_ERR_NO_FILE]);
+            $recipe = recipes()->create($recipe);
+            redirect('recipe.php?id=' . $recipe->id);
+        } catch (InvalidArgumentException | RuntimeException $e) {
+            $error = $e->getMessage();
+            if ($recipe?->imagePath) {
+                $uploader->delete($recipe->imagePath);
+            }
+        } catch (Throwable) {
+            $error = 'Impossible d’enregistrer la recette.';
+            if ($recipe?->imagePath) {
+                $uploader->delete($recipe->imagePath);
+            }
         }
     }
 }

@@ -20,30 +20,34 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     $uploader = image_uploader();
     $newImage = null;
 
-    try {
-        $recipe = Recipe::fromPost($_POST);
-        $recipe->id = $existing->id;
-        $newImage = $uploader->saveRecipeImage($_FILES['RecipeImage'] ?? ['error' => UPLOAD_ERR_NO_FILE]);
-        $recipe->imagePath = $newImage ?? $existing->imagePath;
-        recipes()->update($recipe);
-        if ($newImage !== null && $existing->imagePath !== null) {
-            $uploader->delete($existing->imagePath);
+    if (post_too_large()) {
+        $error = 'L’envoi est trop volumineux (8 Mo maximum pour l’image).';
+    } else {
+        try {
+            $recipe = Recipe::fromPost($_POST);
+            $recipe->id = $existing->id;
+            $newImage = $uploader->saveRecipeImage($_FILES['RecipeImage'] ?? ['error' => UPLOAD_ERR_NO_FILE]);
+            $recipe->imagePath = $newImage ?? $existing->imagePath;
+            recipes()->update($recipe);
+            if ($newImage !== null && $existing->imagePath !== null) {
+                $uploader->delete($existing->imagePath);
+            }
+            redirect('recipe.php?id=' . $recipe->id);
+        } catch (InvalidArgumentException | RuntimeException $e) {
+            $error = $e->getMessage();
+            if ($newImage !== null) {
+                $uploader->delete($newImage);
+            }
+            $recipe->id = $existing->id;
+            $recipe->imagePath = $existing->imagePath;
+        } catch (Throwable) {
+            $error = 'Impossible d’enregistrer la recette.';
+            if ($newImage !== null) {
+                $uploader->delete($newImage);
+            }
+            $recipe->id = $existing->id;
+            $recipe->imagePath = $existing->imagePath;
         }
-        redirect('recipe.php?id=' . $recipe->id);
-    } catch (InvalidArgumentException $e) {
-        $error = $e->getMessage();
-        if ($newImage !== null) {
-            $uploader->delete($newImage);
-        }
-        $recipe->id = $existing->id;
-        $recipe->imagePath = $existing->imagePath;
-    } catch (Throwable) {
-        $error = 'Impossible d’enregistrer la recette.';
-        if ($newImage !== null) {
-            $uploader->delete($newImage);
-        }
-        $recipe->id = $existing->id;
-        $recipe->imagePath = $existing->imagePath;
     }
 }
 

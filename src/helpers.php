@@ -54,6 +54,13 @@ function format_ingredient(array $ingredient): string
     return $name . ' — ' . format_quantity($quantity) . ' ' . Unit::code((int) $ingredient['unit_id']);
 }
 
+function post_too_large(): bool
+{
+    return ($_SERVER['REQUEST_METHOD'] ?? '') === 'POST'
+        && $_POST === []
+        && (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0;
+}
+
 function redirect(string $path): never
 {
     header('Location: ' . url($path));
