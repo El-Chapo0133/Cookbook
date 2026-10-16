@@ -59,7 +59,12 @@ final class Recipe
         $note = trim((string) ($post['RecipeNote'] ?? ''));
 
         $tags = [];
-        foreach (explode(';', (string) ($post['RecipeTags'] ?? '')) as $tag) {
+        $rawTags = (string) ($post['RecipeTags'] ?? '');
+        $draft = trim((string) ($post['RecipeTagDraft'] ?? ''));
+        if ($draft !== '') {
+            $rawTags = $rawTags === '' ? $draft : $rawTags . ';' . $draft;
+        }
+        foreach (preg_split('/[;,\s]+/u', $rawTags) ?: [] as $tag) {
             $tag = trim($tag);
             if ($tag === '' || char_len($tag) > 64) {
                 continue;

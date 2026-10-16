@@ -272,11 +272,11 @@ final class RecipeRepository
     private function saveTags(int $recipeId, array $tags): void
     {
         foreach ($tags as $name) {
-            $this->run('INSERT OR IGNORE INTO tags (name) VALUES (:name)', ['name' => $name]);
-            $tagId = (int) $this->run(
-                'SELECT id FROM tags WHERE name = :name COLLATE NOCASE',
-                ['name' => $name]
-            )->fetchColumn();
+            $tagId = $this->idForTag($name);
+            if ($tagId <= 0) {
+                throw new RuntimeException('Impossible d’enregistrer l’étiquette « ' . $name . ' ».');
+            }
+
             $this->run(
                 'INSERT OR IGNORE INTO recipe_tags (recipe_id, tag_id) VALUES (:recipe_id, :tag_id)',
                 [
@@ -285,6 +285,25 @@ final class RecipeRepository
                 ]
             );
         }
+    }
+
+    private function idForTag(string $name): int
+    {
+        $row = $this->run(
+            'INSERT INTO tags (name) VALUES (:name)
+             ON CONFLICT(name) DO UPDATE SET name = excluded.name
+             RETURNING id',
+            ['name' => $name]
+        )->fetch();
+
+        if ($row !== false && isset($row['id'])) {
+            return (int) $row['id'];
+        }
+
+        return (int) $this->run(
+            'SELECT id FROM tags WHERE name = :name COLLATE NOCASE',
+            ['name' => $name]
+        )->fetchColumn();
     }
 
     /**

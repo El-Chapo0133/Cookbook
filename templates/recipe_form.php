@@ -7,7 +7,7 @@ $ingredients = $recipe !== null && $recipe->ingredients !== [] ? $recipe->ingred
 $steps = $recipe !== null && $recipe->steps !== [] ? $recipe->steps : [''];
 $tags = $recipe?->tags ?? [];
 ?>
-<form class="flex flex-col gap-4 w-8/10" method="post" action="<?= e($action) ?>" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">
+<form id="recipeForm" class="flex flex-col gap-4 w-8/10" method="post" action="<?= e($action) ?>" enctype="multipart/form-data">
         <?php if ($recipe?->id): ?>
         <input type="hidden" name="id" value="<?= (int) $recipe->id ?>">
         <?php endif; ?>
@@ -57,8 +57,8 @@ $tags = $recipe?->tags ?? [];
                         </div>
                         <div class="flex flex-col items-center">
                                 <p class="text-xl">Étiquettes</p>
-                                <p class="text-stone-500">Espace pour valider une étiquette</p>
-                                <input type="text" id="fakeInputForTags" class="text-center border">
+                                <p class="text-stone-500">Espace, Entrée ou virgule pour valider</p>
+                                <input type="text" id="fakeInputForTags" name="RecipeTagDraft" class="text-center border" maxlength="64" autocomplete="off">
                                 <input type="hidden" id="inputForRecipeTags" name="RecipeTags" value="<?= e(implode(';', $tags)) ?>">
                                 <div id="divForRecipeTags" class="w-full mt-4 flex flex-wrap justify-center gap-4">
                                         <?php foreach ($tags as $tag): ?>

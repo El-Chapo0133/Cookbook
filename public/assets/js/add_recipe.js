@@ -49,23 +49,62 @@ function update_hidden_tag_input_value() {
         realInputForTags.value = Array.from(tags.keys()).join(";");
 }
 
+function add_tag_from_input() {
+        const tag = (fakeInputForTags.value || "").trim().replace(/\s+/g, "");
+        fakeInputForTags.value = "";
+        if (tag === "" || tags.has(tag)) {
+                update_hidden_tag_input_value();
+                return;
+        }
+
+        tags.set(tag, true);
+        const safe = tag.replace(/[&<>"']/g, "");
+        divForTags.insertAdjacentHTML("beforeend", `<div id="tag${safe}" class="border rounded-xl px-3 flex items-center gap-1"><p></p><button type="button"><img src="${assetImages}cross.png" alt="cross" class="w-4 h-4 cursor-pointer"></button></div>`);
+        const chip = document.getElementById(`tag${safe}`);
+        if (chip) {
+                chip.querySelector("p").textContent = tag;
+                chip.querySelector("button").addEventListener("click", function() {
+                        remove_tag(tag);
+                });
+        }
+        update_hidden_tag_input_value();
+}
+
 function remove_tag(tag) {
         tags.delete(tag);
         update_hidden_tag_input_value();
-        document.getElementById(`tag${tag}`).remove();
+        const chip = document.getElementById(`tag${tag.replace(/[&<>"']/g, "")}`);
+        if (chip) {
+                chip.remove();
+        }
 }
 
 fakeInputForTags.addEventListener("keydown", (event) => {
-        if (event.key == " ") {
-                let tag = fakeInputForTags.value.replace(/\s/g, "");
-                if (tag !== "" && !tags.has(tag)) {
-                        tags.set(tag, true);
-                        divForTags.insertAdjacentHTML("beforeend", `<div id="tag${tag}" class="border rounded-xl px-3 flex items-center gap-1"><p>${tag}</p><button type="button" onclick="remove_tag('${tag}')"><img src="${assetImages}cross.png" alt="cross" class="w-4 h-4 cursor-pointer"></button></div>`);
-                        update_hidden_tag_input_value();
-                }
-                fakeInputForTags.value = "";
+        if (event.key === " " || event.key === "Enter" || event.key === ",") {
+                event.preventDefault();
+                add_tag_from_input();
         }
 });
+
+fakeInputForTags.addEventListener("blur", add_tag_from_input);
+
+const recipeForm = document.getElementById("recipeForm");
+recipeForm.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter") {
+                return;
+        }
+        if (event.target === fakeInputForTags) {
+                return;
+        }
+        if (event.target && event.target.tagName === "TEXTAREA") {
+                return;
+        }
+        if (event.target && event.target.type === "submit") {
+                return;
+        }
+        event.preventDefault();
+});
+recipeForm.addEventListener("submit", add_tag_from_input);
 
 amountOfIngredients = Math.max(1, divRecipeIngredients.children.length);
 amountOfSteps = Math.max(1, divRecipeSteps.children.length);
