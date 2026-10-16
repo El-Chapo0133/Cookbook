@@ -32,7 +32,7 @@ $scripts = $scripts ?? [];
                         </main>
 
                         <footer class="min-h-30 grid grid-cols-5 p-4">
-                                <p class="place-self-start self-center col-start-1 col-end-4">Autheur : <a href="mailto:levequeloris66@gmail.com" class="font-medium text-fg-brand hover:underline text-blue-800">Loris Lévêque</a><br>Licence : <a href="<?= e(url('licence.php')) ?>" class="font-medium text-fg-brand hover:underline text-blue-800">MIT</a></p>
+                                <p class="place-self-start self-center col-start-1 col-end-4">Autheur : <a href="mailto:levequeloris66@gmail.com" class="font-medium text-fg-brand hover:underline text-blue-800">Loris Lévêque</a><br>Licence : <a href="<?= e(url('license.php')) ?>" class="font-medium text-fg-brand hover:underline text-blue-800">MIT</a></p>
                                 <p class="text-sm italic font-mono col-start-5 place-self-center"><?= e(last_update_date()) ?></p>
                         </footer>
                 </div>

@@ -14,7 +14,7 @@ COPY src /var/www/src
 COPY templates /var/www/templates
 COPY config /var/www/config
 COPY public /var/www/html
-COPY LICENCE /var/www/LICENCE
+COPY LICENSE /var/www/LICENSE
 
 RUN chmod +x /usr/local/bin/cookbook-entrypoint.sh \
     && mkdir -p /var/www/data /var/www/html/uploads/recipes \

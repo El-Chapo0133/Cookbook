@@ -3,4 +3,4 @@
 declare(strict_types=1);
 
 header('Content-Type: text/plain; charset=utf-8');
-readfile(dirname(__DIR__) . '/LICENCE');
+readfile(dirname(__DIR__) . '/LICENSE');
