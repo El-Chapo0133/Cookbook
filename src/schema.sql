@@ -13,7 +13,8 @@ INSERT OR IGNORE INTO units (id, code, label) VALUES
         (2, 'kg', 'Kilogramme'),
         (3, 'ml', 'Millilitre'),
         (4, 'dl', 'Décilitre'),
-        (5, 'l', 'Litre');
+        (5, 'l', 'Litre'),
+        (6, 'portion', 'Portion');
 
 CREATE TABLE IF NOT EXISTS recipes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

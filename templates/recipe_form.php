@@ -19,9 +19,9 @@ $tags = $recipe?->tags ?? [];
                 <?php if ($recipe?->imagePath): ?>
                 <img src="<?= e(url($recipe->imagePath)) ?>" alt="" class="max-h-40 object-contain">
                 <?php endif; ?>
-                <label class="text-stone-600">
+                <label class="text-stone-600 flex flex-col items-center gap-2 w-full max-w-md">
                         Image
-                        <input type="file" name="RecipeImage" accept="image/jpeg,image/png,image/webp" class="block mt-1">
+                        <input type="file" name="RecipeImage" accept="image/jpeg,image/png,image/webp" class="file-box">
                 </label>
         </div>
         <div class="flex w-full gap-4">

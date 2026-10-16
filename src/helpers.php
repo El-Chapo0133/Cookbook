@@ -35,6 +35,25 @@ function format_quantity(float $quantity): string
     return rtrim(rtrim(number_format($quantity, 2, ',', ' '), '0'), ',');
 }
 
+/**
+ * @param array{name: string, quantity: float, unit_id: int} $ingredient
+ */
+function format_ingredient(array $ingredient): string
+{
+    $name = $ingredient['name'];
+    $quantity = (float) $ingredient['quantity'];
+
+    if ($quantity <= 0) {
+        return $name;
+    }
+
+    if ((int) $ingredient['unit_id'] === Unit::PORTION) {
+        return format_quantity($quantity) . ' ' . $name;
+    }
+
+    return $name . ' — ' . format_quantity($quantity) . ' ' . Unit::code((int) $ingredient['unit_id']);
+}
+
 function redirect(string $path): never
 {
     header('Location: ' . url($path));

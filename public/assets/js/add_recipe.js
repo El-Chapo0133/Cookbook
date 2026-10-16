@@ -23,9 +23,20 @@ function apply_auto_height_to_textareas() {
         });
 }
 
+function unit_options_html() {
+        const first = divRecipeIngredients.querySelector("select");
+        if (!first) {
+                return '<option value="1" selected>g</option>';
+        }
+
+        return Array.from(first.options).map(function(option) {
+                return `<option value="${option.value}"${option.value === "1" ? " selected" : ""}>${option.text}</option>`;
+        }).join("");
+}
+
 function add_recipe_ingredient() {
         amountOfIngredients++;
-        divRecipeIngredients.insertAdjacentHTML("beforeend", `<div> <input type="text" maxlength="255" placeholder="Nom de l'ingrédient" name="RecipeIngrName${amountOfIngredients}" class="border w-5/8"> <input type="number" min="0" max="10000" step="any" placeholder="Quantité" name="RecipeIngrVal${amountOfIngredients}" class="border w-1/8"> <select name="RecipeIngrUnit${amountOfIngredients}" class="border w-1/8"> <option value="1" selected>g</option> <option value="2">kg</option> <option value="3">ml</option> <option value="4">dl</option> <option value="5">l</option> </select> </div>`);
+        divRecipeIngredients.insertAdjacentHTML("beforeend", `<div> <input type="text" maxlength="255" placeholder="Nom de l'ingrédient" name="RecipeIngrName${amountOfIngredients}" class="border w-5/8"> <input type="number" min="0" max="10000" step="any" placeholder="Quantité" name="RecipeIngrVal${amountOfIngredients}" class="border w-1/8"> <select name="RecipeIngrUnit${amountOfIngredients}" class="border w-1/8">${unit_options_html()}</select> </div>`);
 }
 
 function add_recipe_text() {

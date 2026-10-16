@@ -9,6 +9,7 @@ final class Unit
     public const ML = 3;
     public const DL = 4;
     public const L = 5;
+    public const PORTION = 6;
 
     /** @var array<int, string> */
     public const CODES = [
@@ -17,6 +18,7 @@ final class Unit
         self::ML => 'ml',
         self::DL => 'dl',
         self::L => 'l',
+        self::PORTION => 'portion',
     ];
 
     public static function isValidId(int $id): bool

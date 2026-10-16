@@ -32,12 +32,7 @@
                 <?php else: ?>
                 <ul class="list-disc pl-6 flex flex-col gap-1">
                         <?php foreach ($recipe->ingredients as $ingredient): ?>
-                        <li>
-                                <?= e($ingredient['name']) ?>
-                                <?php if ($ingredient['quantity'] > 0): ?>
-                                — <?= e(format_quantity($ingredient['quantity'])) ?> <?= e(Unit::code($ingredient['unit_id'])) ?>
-                                <?php endif; ?>
-                        </li>
+                        <li><?= e(format_ingredient($ingredient)) ?></li>
                         <?php endforeach; ?>
                 </ul>
                 <?php endif; ?>
