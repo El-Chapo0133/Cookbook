@@ -92,5 +92,10 @@ $tags = $recipe?->tags ?? [];
                 <p class="text-stone-500">Rappel personnel, visible sur la recette</p>
                 <textarea class="border rounded-xl w-full h-auto text-clip p-2" name="RecipeNote"><?= e($recipe?->note ?? '') ?></textarea>
         </div>
-        <input type="submit" value="<?= e($submitLabel) ?>" class="rounded-2xl border-2 border-emerald-600 mx-60 py-2 min-w-0 text-xl font-bold hover:bg-emerald-600 hover:text-white cursor-pointer">
+        <div class="flex flex-col items-center gap-4 mx-60 mb-8">
+                <input type="submit" value="<?= e($submitLabel) ?>" class="w-full rounded-2xl border-2 border-emerald-600 py-2 min-w-0 text-xl font-bold hover:bg-emerald-600 hover:text-white cursor-pointer">
+                <?php if ($recipe?->id): ?>
+                <button type="submit" name="delete" value="1" class="w-1/2 rounded-2xl bg-red-600 text-white py-2 text-xl font-bold hover:bg-red-700 cursor-pointer" onclick="return confirm('Supprimer cette recette ?');">Supprimer</button>
+                <?php endif; ?>
+        </div>
 </form>
