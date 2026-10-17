@@ -19,10 +19,15 @@ $tags = $recipe?->tags ?? [];
                 <?php if ($recipe?->imagePath): ?>
                 <img src="<?= e(url($recipe->imagePath)) ?>" alt="" class="max-h-40 object-contain">
                 <?php endif; ?>
-                <label class="text-stone-600 flex flex-col items-center gap-2 w-full max-w-md">
+                <div class="text-stone-600 flex flex-col items-center gap-2 w-full max-w-md">
                         Image
-                        <input type="file" name="RecipeImage" accept="image/jpeg,image/png,image/webp" class="file-box">
-                </label>
+                        <div class="file-box-row">
+                                <input type="file" name="RecipeImage" accept="image/jpeg,image/png,image/webp" class="file-box-input">
+                                <?php if ($recipe?->id && $recipe->imagePath): ?>
+                                <button type="submit" name="delete_image" value="1" class="file-box-delete" title="Supprimer l’image">Supprimer</button>
+                                <?php endif; ?>
+                        </div>
+                </div>
         </div>
         <div class="flex w-full gap-4">
                 <div class="p-4 flex w-2/3 gap-4 flex-col items-center">

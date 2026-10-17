@@ -2,21 +2,42 @@ textarea {
         resize: none;
 }
 
-.file-box {
-        display: block;
+.file-box-row {
+        display: flex;
+        align-items: center;
         width: 100%;
         border: 1px solid #000;
         border-radius: 0.75rem;
         padding: 0.5rem 0.75rem;
-        cursor: pointer;
         background: #fff;
+        gap: 0.5rem;
 }
 
-.file-box::file-selector-button {
+.file-box-input {
+        flex: 1;
+        min-width: 0;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+}
+
+.file-box-input::file-selector-button {
         border: 1px solid #000;
         border-radius: 0.75rem;
         background: #fff;
         padding: 0.35rem 0.9rem;
         margin-right: 0.75rem;
+        cursor: pointer;
+}
+
+.file-box-delete {
+        margin-left: auto;
+        flex-shrink: 0;
+        border: none;
+        border-radius: 0.75rem;
+        background: #dc2626;
+        color: #fff;
+        padding: 0.35rem 0.9rem;
+        font-weight: 700;
         cursor: pointer;
 }

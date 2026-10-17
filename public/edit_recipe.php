@@ -25,6 +25,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         redirect('index.php');
     }
 
+    if (isset($_POST['delete_image'])) {
+        $uploader->delete($existing->imagePath);
+        $existing->imagePath = null;
+        recipes()->update($existing);
+        redirect('edit_recipe.php?id=' . $existing->id);
+    }
+
     if (post_too_large()) {
         $error = 'L’envoi est trop volumineux (8 Mo maximum pour l’image).';
     } else {
