@@ -14,7 +14,9 @@ INSERT OR IGNORE INTO units (id, code, label) VALUES
         (3, 'ml', 'Millilitre'),
         (4, 'dl', 'Décilitre'),
         (5, 'l', 'Litre'),
-        (6, 'portion', 'Portion');
+        (6, 'portion', 'Portion'),
+        (7, 'C. à S.', 'Cuillère à Soupe'),
+        (8, 'C. à C.', 'Cuillère à Café');
 
 CREATE TABLE IF NOT EXISTS recipes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -8,6 +8,8 @@ declare(strict_types=1);
 final class Recipe
 {
     public const STEP_SEPARATOR = '§';
+    public const MAX_INGREDIENT_COUNT = 100;
+    public const MAX_STEP_COUNT = 100;
 
     /**
      * @param list<string> $tags
@@ -54,8 +56,8 @@ final class Recipe
             throw new InvalidArgumentException('Le titre est obligatoire (255 caractères maximum).');
         }
 
-        $people = max(0, (int) ($post['RecipePeopleAmount'] ?? 0));
-        $duration = max(0, (int) ($post['RecipeDuration'] ?? 0));
+        $people = (int) ($post['RecipePeopleAmount'] ?? 0);
+        $duration = (int) ($post['RecipeDuration'] ?? 0);
         $note = trim((string) ($post['RecipeNote'] ?? ''));
 
         $tags = [];
@@ -74,7 +76,7 @@ final class Recipe
         $tags = array_values(array_unique($tags));
 
         $ingredients = [];
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= self::MAX_INGREDIENT_COUNT; $i++) {
             if (!array_key_exists('RecipeIngrName' . $i, $post)) {
                 break;
             }
@@ -94,13 +96,13 @@ final class Recipe
 
             $ingredients[] = [
                 'name' => $name,
-                'quantity' => max(0, (float) ($post['RecipeIngrVal' . $i] ?? 0)),
+                'quantity' => (float) ($post['RecipeIngrVal' . $i] ?? 0),
                 'unit_id' => $unitId,
             ];
         }
 
         $steps = [];
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= self::MAX_STEP_COUNT; $i++) {
             if (!array_key_exists('RecipeText' . $i, $post)) {
                 break;
             }

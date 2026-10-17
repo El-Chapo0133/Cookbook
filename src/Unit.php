@@ -10,6 +10,8 @@ final class Unit
     public const DL = 4;
     public const L = 5;
     public const PORTION = 6;
+    public const CAS = 7;
+    public const CAC = 8;
 
     /** @var array<int, string> */
     public const CODES = [
@@ -19,6 +21,8 @@ final class Unit
         self::DL => 'dl',
         self::L => 'l',
         self::PORTION => 'portion',
+        self::CAS => 'C. à S.',
+        self::CAC => 'C. à C.',
     ];
 
     public static function isValidId(int $id): bool
