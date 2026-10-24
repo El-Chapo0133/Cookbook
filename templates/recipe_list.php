@@ -5,13 +5,14 @@ $emptyMessage = $emptyMessage ?? 'Aucune recette.';
 <?php if ($recipes === []): ?>
 <p class="text-center text-stone-600 py-6"><?= e($emptyMessage) ?></p>
 <?php else: ?>
-<table class="w-full table-fixed border-collapse">
+<div class="recipe-list-wrap">
+<table class="recipe-list w-full table-fixed border-collapse text-sm md:text-base">
         <thead>
                 <tr class="border-b-2 border-emerald-600 text-left">
-                        <th class="p-2 w-1/2">Titre</th>
-                        <th class="p-2 w-1/6">Durée</th>
-                        <th class="p-2 w-1/6">Ajoutée le</th>
-                        <th class="p-2 w-1/6">Modifiée le</th>
+                        <th class="p-2 w-2/3 md:w-1/2">Titre</th>
+                        <th class="p-2 w-1/3 md:w-1/6">Durée</th>
+                        <th class="p-2 w-1/6 col-date">Ajoutée le</th>
+                        <th class="p-2 w-1/6 col-date">Modifiée le</th>
                 </tr>
         </thead>
         <tbody>
@@ -19,10 +20,11 @@ $emptyMessage = $emptyMessage ?? 'Aucune recette.';
                 <tr class="border-b border-stone-200 hover:bg-emerald-50">
                         <td class="p-2"><a class="block truncate text-emerald-800 hover:underline font-medium" href="<?= e(url('recipe.php?id=' . $item->id)) ?>"><?= e($item->title) ?></a></td>
                         <td class="p-2"><?= $item->duration > 0 ? e((string) $item->duration) . ' min' : '—' ?></td>
-                        <td class="p-2 whitespace-nowrap"><?= e($item->createdAt !== '' ? $item->createdAt : '—') ?></td>
-                        <td class="p-2 whitespace-nowrap"><?= e($item->modifiedAt !== '' ? $item->modifiedAt : '—') ?></td>
+                        <td class="p-2 whitespace-nowrap col-date"><?= e($item->createdAt !== '' ? $item->createdAt : '—') ?></td>
+                        <td class="p-2 whitespace-nowrap col-date"><?= e($item->modifiedAt !== '' ? $item->modifiedAt : '—') ?></td>
                 </tr>
                 <?php endforeach; ?>
         </tbody>
 </table>
+</div>
 <?php endif; ?>

@@ -1,11 +1,11 @@
 <?php
 /** @var Recipe $recipe */
 ?>
-<article class="w-8/10 py-8 flex flex-col gap-8">
+<article class="w-full max-w-5xl md:w-8/10 py-6 md:py-8 flex flex-col gap-8">
         <header class="flex flex-col items-center gap-3 text-center">
-                <h2 class="text-4xl font-bold"><?= e($recipe->title) ?></h2>
+                <h2 class="text-2xl md:text-4xl font-bold break-words"><?= e($recipe->title) ?></h2>
                 <?php if ($recipe->imagePath): ?>
-                <img src="<?= e(url($recipe->imagePath)) ?>" alt="<?= e($recipe->title) ?>" class="max-h-80 object-contain">
+                <img src="<?= e(url($recipe->imagePath)) ?>" alt="<?= e($recipe->title) ?>" class="max-h-80 w-full object-contain">
                 <?php endif; ?>
                 <p class="text-stone-600">
                         <?php if ($recipe->people > 0): ?>
@@ -59,6 +59,6 @@
         <?php endif; ?>
 
         <p class="text-center">
-                <a href="<?= e(url('edit_recipe.php?id=' . $recipe->id)) ?>" class="inline-block rounded-2xl border-2 border-emerald-600 px-8 py-2 text-xl font-bold hover:bg-emerald-600 hover:text-white">Modifier</a>
+                <a href="<?= e(url('edit_recipe.php?id=' . $recipe->id)) ?>" class="inline-block rounded-2xl border-2 border-emerald-600 px-6 md:px-8 py-2 text-lg md:text-xl font-bold hover:bg-emerald-600 hover:text-white">Modifier</a>
         </p>
 </article>

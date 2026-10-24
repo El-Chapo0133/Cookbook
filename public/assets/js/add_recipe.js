@@ -36,12 +36,12 @@ function unit_options_html() {
 
 function add_recipe_ingredient() {
         amountOfIngredients++;
-        divRecipeIngredients.insertAdjacentHTML("beforeend", `<div> <input type="text" maxlength="255" placeholder="Nom de l'ingrédient" name="RecipeIngrName${amountOfIngredients}" class="border w-5/8"> <input type="number" min="0" max="10000" step="any" placeholder="Quantité" name="RecipeIngrVal${amountOfIngredients}" class="border w-1/8"> <select name="RecipeIngrUnit${amountOfIngredients}" class="border w-1/8">${unit_options_html()}</select> </div>`);
+        divRecipeIngredients.insertAdjacentHTML("beforeend", `<div class="ingredient-row"> <input type="text" maxlength="255" placeholder="Nom de l'ingrédient" name="RecipeIngrName${amountOfIngredients}" class="border"> <input type="number" min="0" max="10000" step="any" placeholder="Quantité" name="RecipeIngrVal${amountOfIngredients}" class="border"> <select name="RecipeIngrUnit${amountOfIngredients}" class="border">${unit_options_html()}</select> </div>`);
 }
 
 function add_recipe_text() {
         amountOfSteps++;
-        divRecipeSteps.insertAdjacentHTML("beforeend", `<div class="flex w-full items-center"> <p class="text-l w-20">Étape ${amountOfSteps}</p> <textarea class="border rounded-xl w-full h-auto text-clip p-2" name="RecipeText${amountOfSteps}"></textarea> </div>`);
+        divRecipeSteps.insertAdjacentHTML("beforeend", `<div class="recipe-step-row"> <p class="text-l w-full sm:w-20 shrink-0">Étape ${amountOfSteps}</p> <textarea class="border rounded-xl w-full h-auto text-clip p-2" name="RecipeText${amountOfSteps}"></textarea> </div>`);
         apply_auto_height_to_textareas();
 }
 

@@ -1,4 +1,4 @@
-<div class="w-8/10 py-8 flex flex-col gap-8">
+<div class="w-full max-w-5xl md:w-8/10 py-6 md:py-8 flex flex-col gap-8">
         <p class="text-center text-lg">
                 <span class="inline-block rounded-full border-2 border-emerald-600 px-4 py-1 font-semibold">
                         <?= (int) $recipeCount === 1 ? '1 recette' : (int) $recipeCount . ' recettes' ?>
